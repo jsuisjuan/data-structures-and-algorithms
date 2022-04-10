@@ -51,10 +51,78 @@ string classificarAmostra(vector<Individuo>& individuos, Individuo novo_exemplo,
     }
 
     int tam_vet = individuos.size();
+    set<pair<double, int> > dist_individuos;
 
-    
+    for (int i = 0; i < tam_vet; i++) {
+        double dist = obterDistEuclidiana(individuos[i], novo_exemplo);
+        dist_individuos.insert(make_pair(dist, i));
+    }
+
+    set<pair<double, int> >::iterator it;
+    vector<int> cont_classes(3);
+    int contK = 0;
+
+    for (it = dist_individuos.begin(); it != dist_individuos.end(); it++) {
+        string classe = individuos[it->second].getClasse();
+
+        if (classe == "Iris-setorosa")
+            cont_classes[0]++;
+        else if (classe == "Iris-versicolor")
+            cont_classes[1]++;
+        else
+            cont_classes[2]++;
+        
+        if (contK > K) break;
+        contK++;
+    }
+
+    string classe_classificacao;
+
+    if (cont_classes[0] >= cont_classes[1] && cont_classes[0] >= cont_classes[2])
+        classe_classificacao = "Iris-setosa";
+    else if (cont_classes[1] >= cont_classes[0] && cont_classes[1] >= cont_classes[2])
+        classe_classificacao = "Iris-versicolor";
+    else
+        classe_classificacao = "Iris-virginica";
+
+    return classe_classificacao;
 }
-int main() {
 
+int main() {
+    vector<Individuo> individuos;
+    int K = 3;
+    int tam_treinamento = 105;
+
+    for (int i = 0; i < tam_treinamento; i++) {
+        string classe;
+        double a, b, c, d;
+
+        cin >> a >> b >> c >> d >> classe;
+
+        individuos.push_back(Individuo(a, b, c, d, classe));
+    }
+
+    int acertos = 0;
+    int tam_testes = 150 - tam_treinamento;
+
+    for (int i = 0; i < tam_testes; i++) {
+        string classe;
+        double a, b, c, d;
+
+        cin >> a >> b >> c >> d >> classe;
+
+        Individuo ind(a, b, c, d, classe);
+
+        string classe_obtida = classificarAmostra(individuos, ind, K);
+
+        cout << "Classe esperada: " << classe << "\n";
+        cout << "Classe obtida: " << classe_obtida << "\n\n";
+
+        if (classe == classe_obtida)
+            acertos++;
+    }
+
+    cout << acertos << " acertos de um total de " << tam_testes << " testes.\n";
+    
     return 0;
 }
