@@ -5,13 +5,14 @@
 using namespace std;
 
 int main() {
-    int numero;
+    int numero, contador = 0;
 
     cin >> numero;
-
-    for (int i = 0; i < 6; i++) {
-        if (numero % 2 != 0) {
+    
+    while (contador < 6) {
+        if (numero%2!=0) {
             cout << numero << endl;
+            contador++;
         }
         numero++;
     }
