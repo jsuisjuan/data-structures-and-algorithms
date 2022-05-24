@@ -1,6 +1,6 @@
 
 # Algoritmos & Estrutura de Dados
-#### Programas dedicados à compreensão dos conceitos algorítmicos e de estruturas de dados. Incluido programas acadêmicos e não acadêmicos.
+#### Programas dedicados à compreensão dos conceitos algorítmicos e de estruturas de dados. Incluindo programas acadêmicos e não acadêmicos.
 
 
 - **Basic Algorithms:** programas que exploram os conceitos básicos de algorítmos. 
